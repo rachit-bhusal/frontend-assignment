@@ -1,5 +1,4 @@
 'use client';
-
 import { updateProducts } from '@/app/features/products/product.slice';
 import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
