@@ -1,12 +1,11 @@
 'use client';
-import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useDispatch, useSelector } from 'react-redux';
-import { searchProducts, updateProducts } from './features/products/product.slice';
-import type { RootState } from './store';
-
 import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateProducts } from './features/products/product.slice';
+import type { RootState } from './store';
 
 const Home = () => {
 	const products = useSelector((state: RootState) => state.products.products);
@@ -25,20 +24,29 @@ const Home = () => {
 	if (error) return 'An error has occurred: ';
 
 	return (
-		<>
+		<section className='flex flex-wrap items-center justify-between bg-gradient-to-r from-gray-50 to-gray-100'>
 			{products &&
-				products.map((item: any) => {
+				products.length > 0 &&
+				products?.map((item: any) => {
 					return (
-						<Link href={`/product/${item.id}`} key={item.id}>
-							<div>
-								<h1>{item.title}</h1>
-								<p>{item.price}</p>
-								<Image width={500} height={500} alt={item.id} src={item.image}></Image>
+						<div key={item.id} className='rounded-lg overflow-hidden shadow-lg max-w-xs p-2 m-5'>
+							<Link href={`/product/${item.id}`}>
+								<Image
+									className='w-full overflow-hidden object-cover'
+									width={300}
+									height={300}
+									alt={item.id}
+									src={item.image}
+								/>
+							</Link>
+							<div className='px-6 py-4'>
+								<div className='font-bold text-xl mb-2 line-clamp-2 text-center'>{item.title}</div>
+								<p className='text-gray-700 text-base text-center'>${item.price}</p>
 							</div>
-						</Link>
+						</div>
 					);
 				})}
-		</>
+		</section>
 	);
 };
 

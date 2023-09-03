@@ -1,8 +1,7 @@
 'use client';
-import { updateProducts } from '@/app/features/products/product.slice';
-import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
+import Image from 'next/image';
 import { useParams } from 'next/navigation';
-import { useDispatch, useSelector } from 'react-redux';
 
 const ProductDetails = () => {
 	const { id } = useParams();
@@ -19,15 +18,18 @@ const ProductDetails = () => {
 	console.log(id);
 
 	return (
-		<>
+		<div className='flex flex-col justify-center items-center w-full p-2'>
 			{data && (
-				<div>
-					<h1>{data.title}</h1>
-					<p>{data.price}</p>
-					<p>{data.description}</p>
+				<div className='flex flex-col items-center p-4 m-4 shadow-xl w-1/2 rounded-3xl'>
+					<Image className='object-cover' width={300} height={300} alt={data.id} src={data.image} />
+					<div className='text-center w-full p-10 flex flex-col justify-between items-center'>
+						<h1 className='m-5 text-2xl text-black'>{data.title}</h1>
+						<p className='p-10 text-gray-600 font-serif text-xl'>{data.description}</p>
+						<p className='font-mono text-xl border-2 w-1/2'>${data.price}</p>
+					</div>
 				</div>
 			)}
-		</>
+		</div>
 	);
 };
 
