@@ -13,12 +13,10 @@ const Home = () => {
 	const dispatch = useDispatch();
 	const { isLoading, error, data } = useQuery({
 		queryKey: ['repoData'],
-		queryFn: () => fetch('https://fakestoreapi.com/products?limit=10').then((res) => res.json()),
+		queryFn: () => fetch('https://fakestoreapi.com/products').then((res) => res.json()),
 	});
 
 	useEffect(() => {
-		console.log(data);
-
 		dispatch(updateProducts(data));
 	}, [data, dispatch]);
 

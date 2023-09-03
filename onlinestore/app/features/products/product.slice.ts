@@ -14,10 +14,12 @@ type Product = {
 	image: string;
 	rating: Rating;
 };
-type InitialState = { products: Product[] };
+
+type InitialState = { products: Product[]; searchResults: Product[] };
 
 const initialState: InitialState = {
 	products: [],
+	searchResults: [],
 };
 
 export const productSlice = createSlice({
@@ -28,7 +30,10 @@ export const productSlice = createSlice({
 			state.products = action.payload;
 		},
 		searchProducts: (state, action: PayloadAction<string>) => {
-			state.products = state.products.filter((product) => product.title.toLowerCase().includes(action.payload.toLowerCase()));
+			const search = action.payload;
+			state.searchResults = state.products.filter((product) => {
+				return product.title.toLowerCase().includes(search.toLowerCase());
+			});
 		},
 	},
 });
